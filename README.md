@@ -14,7 +14,16 @@
 
 Sviluppato per simulare scenari reali ad alta intensità di dati (tipici del settore Energy/Aerospace), il progetto trasforma terabyte di rilevazioni grezze e non strutturate in Data Products certificati, pronti per la Business Intelligence e algoritmi di Predictive Maintenance.
 
+## 🏢 Valore Enterprise & Settori di Applicazione
 
+| Azienda / Settore | Rilevanza |
+|-------------------|-----------|
+| **Enel** (Energy, IoT) | Architettura dati per flotte di impianti rinnovabili: pipeline IoT, late-arriving data, manutenzione predittiva |
+| **Terna** (Grid Operator) | Monitoraggio telemetrico di asset fisici distribuiti, SLA su source freshness, SCD Type 2 per storicizzazione asset |
+| **Leonardo** (Aerospace/Defense) | Anomaly detection su sensori Z-Score, physics validation tests, data quality industriale |
+| **Data Reply** | dbt modern data stack: Medallion Architecture, Data Contracts, MetricFlow, Slim CI |
+| **NTT Data / Accenture** | Data Mesh Producer/Consumer, FinOps BigQuery, DevOps con `--defer` e `--state` |
+| **Engineering Informatica** | Pipeline Python + GCP end-to-end, pattern enterprise reproducibili |
 
 ---
 
