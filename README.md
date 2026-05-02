@@ -16,14 +16,13 @@ Sviluppato per simulare scenari reali ad alta intensità di dati (tipici del set
 
 ## 🏢 Valore Enterprise & Settori di Applicazione
 
-| Azienda / Settore | Rilevanza |
+| Settore / Ambito | Rilevanza & Benefici |
 |-------------------|-----------|
-| **Enel** (Energy, IoT) | Architettura dati per flotte di impianti rinnovabili: pipeline IoT, late-arriving data, manutenzione predittiva |
-| **Terna** (Grid Operator) | Monitoraggio telemetrico di asset fisici distribuiti, SLA su source freshness, SCD Type 2 per storicizzazione asset |
-| **Leonardo** (Aerospace/Defense) | Anomaly detection su sensori Z-Score, physics validation tests, data quality industriale |
-| **Data Reply** | dbt modern data stack: Medallion Architecture, Data Contracts, MetricFlow, Slim CI |
-| **NTT Data / Accenture** | Data Mesh Producer/Consumer, FinOps BigQuery, DevOps con `--defer` e `--state` |
-| **Engineering Informatica** | Pipeline Python + GCP end-to-end, pattern enterprise reproducibili |
+| **Energy & Utilities (Renewables)** | Architettura dati per flotte di impianti distribuiti: pipeline IoT, gestione late-arriving data e abilitazione manutenzione predittiva. |
+| **Grid & Infrastructure Operators** | Monitoraggio telemetrico di asset fisici critici, enforcement di SLA su source freshness e implementazione SCD Type 2 per l'audit trail storico degli asset. |
+| **Industrial Manufacturing & Aerospace** | Anomaly detection su sensori tramite Z-Score, validazione fisica dei dati (physics-informed testing) e monitoraggio della data quality industriale. |
+| **Modern Data Stack Consulting** | Implementazione rigorosa di dbt: Medallion Architecture, Data Contracts, MetricFlow e Slim CI per pipeline scalabili. |
+| **Enterprise Data Mesh** | Paradigma Producer/Consumer per il disaccoppiamento dei team, FinOps per l'ottimizzazione dei costi BigQuery e pattern DevOps riproducibili. |
 
 ---
 
@@ -38,17 +37,17 @@ Il progetto affronta e risolve le sfide critiche dell'ingegneria dei dati modern
 * **Gestione 'Late Arriving Data' (Self-Healing):** Gestione automatica dei ritardi di rete IoT tramite pattern di UPSERT. I modelli incrementali sfruttano la strategia merge e chiavi Hash MD5 (surrogate keys) per accodare i nuovi pacchetti e sovrascrivere eventuali ritrasmissioni, annullando il rischio di duplicati.
 * **Data Contracts & Model Versioning:** Il data product principale è blindato da rigidi Data Contracts (`enforced: true`) che impediscono modifiche distruttive allo schema. Le evoluzioni sono gestite tramite Model Versioning nativo, mantenendo le vecchie versioni operative (con `deprecation_date`) per garantire migrazioni a zero-downtime per i team a valle.
 * **Quality Assurance a 3 Livelli & Fisica dei Dati:** Oltre ai test relazionali e ai limiti parametrici, il progetto implementa Singular Tests SQL che validano vere e proprie leggi fisiche industriali (es. impossibilità di generare energia in assenza di vento), isolando immediatamente anomalie hardware sfuggite ai sensori.
-* **Source Freshness & SLA Monitoring:** Controlli rigorosi sulle fonti grezze per monitorare la latenza. In ambito eolico, intercettare oltre 24h di mancata trasmissione trasforma la pipeline dati in un sistema di allerta operativa precoce contro guasti ai gateway SCADA.
+* **Source Freshness & SLA Monitoring:** Controlli rigorosi sulle fonti grezze per monitorare la latenza. In ambito industriale, intercettare ritardi di trasmissione trasforma la pipeline dati in un sistema di allerta operativa precoce contro guasti ai gateway di campo.
 
 ### 💡 3. Advanced Analytics & Astrazione
-* **Polyglot Transformation (dbt-Python per Manutenzione Predittiva):** I calcoli procedurali statistici complessi non vengono forzati in SQL. Il progetto esegue nativamente nel DWH modelli Python (pandas via Dataproc) per l'individuazione di anomalie vibrazionali tramite Z-Score, fornendo dati pronti per interventi di manutenzione predittiva.
+* **Polyglot Transformation (dbt-Python per Manutenzione Predittiva):** I calcoli procedurali statistici complessi non vengono forzati in SQL. Il progetto esegue nativamente nel DWH modelli Python (pandas) per l'individuazione di anomalie vibrazionali tramite Z-Score, fornendo dati pronti per interventi di manutenzione predittiva.
 * **Semantic Layer & MetricFlow:** Astrazione totale delle logiche di business dal codice fisico. I KPI (come la Potenza Media per Turbina, calcolata dinamicamente come ratio) sono definiti centralmente in YAML, creando una vera "Single Source of Truth" interrogabile da qualsiasi tool BI.
-* **Data Lineage Esteso & Exposures:** Il Lineage Graph (DAG) si estende oltre il DWH fino ai tool applicativi (es. dashboard direzionali PowerBI), abilitando una Impact Analysis istantanea e indicando chiaramente l'ownership dei Data Steward.
+* **Data Lineage Esteso & Exposures:** Il Lineage Graph (DAG) si estende oltre il DWH fino ai tool applicativi (es. dashboard direzionali), abilitando una Impact Analysis istantanea e indicando chiaramente l'ownership dei Data Steward.
 
 ### ⚙️ 4. Scalabilità ed Efficienza (FinOps & DevOps)
 * **Ottimizzazione Costi BigQuery (FinOps):** Architettura progettata per abbattere i costi di I/O. L'uso combinato di partizionamento temporale (`partition_by`), clustering, modelli incrementali e filtri dinamici di lookback in staging azzera i "full-table scan", massimizzando il Partition Pruning.
-* **Storicizzazione Asset (SCD Type 2):** Tracciamento automatico del ciclo di vita fisico dell'hardware tramite i dbt Snapshots. Spostamenti o revamping delle turbine non alterano retroattivamente i KPI passati, garantendo un audit trail energetico immutabile.
-* **Metaprogrammazione Jinja (DRY):** Utilizzo di macro e costrutti for-loop dinamici per automatizzare aggregazioni complesse (come i range di potenza pivotati), riducendo drasticamente il debito tecnico e accelerando il time-to-market di nuove feature.
+* **Storicizzazione Asset (SCD Type 2):** Tracciamento automatico del ciclo di vita fisico dell'hardware tramite i dbt Snapshots. Modifiche anagrafiche non alterano retroattivamente i KPI passati, garantendo un audit trail immutabile.
+* **Metaprogrammazione Jinja (DRY):** Utilizzo di macro e costrutti for-loop dinamici per automatizzare aggregazioni complesse, riducendo drasticamente il debito tecnico e accelerando il time-to-market di nuove feature.
 * **DevOps, Slim CI & Deferral:** Pipeline ottimizzate che sfruttano il confronto di stato (`manifest.json`) e il deferral (`--defer`) per elaborare e testare esclusivamente i modelli modificati durante le Pull Request, importando i nodi genitore dalla produzione per una CI velocissima ed economica.
 
  <br><br>
@@ -59,13 +58,13 @@ L'architettura si divide in tre macro-moduli, separati fisicamente per supportar
 
 * **🐍 Python Data Ingestion (`data_ops_ingestion`):** Modulo ad oggetti per la simulazione e l'ingestion dei dati sensoriali verso BigQuery. Il codice è strutturato secondo principi di separazione delle responsabilità: la classe `TurbineDataGenerator` si occupa esclusivamente della generazione dei dati sintetici (anagrafica turbine e telemetria), mentre `BigQueryIngestor` gestisce la connessione al DWH e il caricamento tramite l'API nativa `google-cloud-bigquery`.
 
-    Tutta la configurazione è esternalizzata in file YAML (`simulation_config.yaml` per i parametri di generazione, `ingest_config.yaml` per la connessione BigQuery), rendendo il sistema completamente parametrizzabile senza modificare codice.
+    Tutta la configurazione è esternalizzata in file YAML, rendendo il sistema completamente parametrizzabile senza modificare codice.
 
-    Il modulo implementa un sistema di **logging strutturato** tramite `RotatingFileHandler` con un custom `SectionFilter` che etichetta ogni log con la fase operativa corrente (es. `[GENERAZIONE DATI]`, `[DATA_INGESTION]`, `[CONNESSIONE]`), facilitando il debug in contesti di pipeline complesse. L'override di `sys.excepthook` garantisce che anche le eccezioni non gestite vengano catturate nei log, evitando crash silenziosi.
+    Il modulo implementa un sistema di **logging strutturato** tramite `RotatingFileHandler` con un custom `SectionFilter` che etichetta ogni log con la fase operativa corrente, facilitando il debug in contesti di pipeline complesse. L'override di `sys.excepthook` garantisce che anche le eccezioni non gestite vengano catturate nei log, evitando crash silenziosi.
 
-    Sul fronte della **data quality**, il generatore inietta volontariamente anomalie configurabili: record con valori nulli su temperatura e vibrazione, outlier estremi (temperature a 550°C, RPM a -999 come sentinella di errore elettronico) e righe duplicate — il tutto per testare la resilienza dei layer dbt a valle.
+    Sul fronte della **data quality**, il generatore inietta volontariamente anomalie configurabili: record con valori nulli, outlier estremi e righe duplicate — il tutto per testare la resilienza dei layer dbt a valle.
 
-    Il caricamento su BigQuery adotta una **strategia duale**: autodetect per i metadati anagrafici (struttura semplice e stabile) e schema esplicito con `SchemaField` per la telemetria, dove il typing rigoroso di timestamp e float è critico per evitare errori di cast nei modelli dbt successivi.
+    Il caricamento su BigQuery adotta una **strategia duale**: autodetect per i metadati anagrafici e schema esplicito per la telemetria, dove il typing rigoroso è critico per evitare errori di cast nei modelli dbt successivi.
 
     Di seguito la struttura del modulo Python:
 
